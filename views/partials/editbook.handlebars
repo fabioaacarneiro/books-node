@@ -1,0 +1,14 @@
+<dialog class="dialog-form" close id="editbook-dialog" <h1>Edite o seu livro:</h1>
+    <form action="/books/edit/{{book.id}}" method="post">
+        <div class="form-control">
+            <label class="input-label" for="title">Título:</label>
+            <input class="input-empty" input-form type="text" name="title" id="title" value="{{book.title}}">
+            <label class="input-label" for="pageqty">Páginas:</label>
+            <input class="input-empty" input-form type="text" name="pageqty" id="pageqty" value="{{book.pageqty}}">
+        </div>
+        <section class="btn-control">
+            <button class="btn btn-confirm" type="submit">Atualizar</button>
+            <button class="btn btn-cancel" id="editbook-dialog-cancel">Cancelar</button>
+        </section>
+    </form>
+</dialog>

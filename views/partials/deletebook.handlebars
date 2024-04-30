@@ -1,0 +1,15 @@
+<dialog class="dialog-form" close id="deletebook-dialog" <h1>Confirme os dados antes de excluir:</h1>
+    <form action="/books/delete/{{book.id}}" method="post">
+        <div class="form-control">
+            <label class="input-label">Título:</label>
+            <input class="input-empty" disabled input-form type="text" name="title" id="title" value="{{book.title}}">
+            <label class="input-label">Páginas:</label>
+            <input class="input-empty" disabled input-form type="text" name="pageqty" id="pageqty"
+                value="{{book.pageqty}}">
+        </div>
+        <section class="btn-control">
+            <button class="btn btn-danger" type="submit">Confirmar</button>
+            <button class="btn btn-confirm" id="deletebook-dialog-cancel">Cancelar</button>
+        </section>
+    </form>
+</dialog>

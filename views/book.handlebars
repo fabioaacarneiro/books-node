@@ -1,0 +1,14 @@
+<h1>Livros disponíveis:</h1>
+<div class="books-container">
+    <div class="book-item">
+        <h2>{{book.title}}</h2>
+        <p>O livro possuí {{book.pageqty}} páginas.</p>
+        <div class="btn-control">
+            <a href="#" id="edit-button">Editar</a>
+            <a href="#" id="delete-button">Excluir</a>
+        </div>
+    </div>
+</div>
+
+{{> "editbook"}}
+{{> "deletebook"}}
