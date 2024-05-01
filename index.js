@@ -3,6 +3,8 @@ const express = require("express")
 const exphbs = require("express-handlebars")
 const conn = require("./db/connection")
 
+const Book = require("./models/Book")
+
 const app = express()
 
 app.use(
@@ -25,100 +27,69 @@ app.get("/", (req, res) => {
     res.render("home")
 })
 
-app.get("/books", (req, res) => {
-    const sql = "select * from books;"
-    conn.query(sql, (err, data) => {
-        if (err) {
-            console.log(err)
-            return
-        }
-
-        const books = data
-
-        res.render('books', { books })
-    })
+app.get("/books", async (req, res) => {
+    const booksData = await Book.findAll()
+    if (!booksData) {
+        res.render('books', {})
+        return
+    }
+    const books = booksData.map(book => book.dataValues)
+    res.render('books', { books })
 })
 
-app.get("/books/:id", (req, res) => {
+app.get("/books/:id", async (req, res) => {
     const id = req.params.id
-    const sql = "select * from books where ?? = ?"
-    const data = ["id", id]
-
-    conn.query(sql, data, (err, data) => {
-        if (err) {
-            console.log(err)
-        }
-
-        const book = data[0]
-
-        res.render("book", { book })
-    })
+    const bookData = await Book.findByPk(id)
+    if (!bookData) {
+        console.log("Livro não encontrado.")
+        return
+    }
+    const book = bookData.dataValues
+    console.log(book)
+    res.render("book", { book })
 })
 
-app.post("/books/insertbook", (req, res) => {
+app.post("/books/insertbook", async (req, res) => {
     const title = req.body.title
     const pageqty = req.body.pageqty
-
-    const sql = "insert into books (??, ??) values (?, ?);"
-    const data = ["title", "pageqty", title, pageqty]
-
-    conn.query(sql, data, (err) => {
-        if (err) {
-            console.log(err)
-        }
-
-        res.redirect("/books")
-    })
+    await Book.create({ title, pageqty })
+    res.redirect("/books")
 })
 
-app.get("/books/edit/:id", (req, res) => {
+app.get("/books/edit/:id", async (req, res) => {
     const id = req.params.id
-    const sql = "select * from books where ?? = ?"
-    const data = ["id", id]
-
-    conn.query(sql, data, (err, data) => {
-        if (err) {
-            console.log(err)
-            return
-        }
-
-        const book = data[0]
-        res.render("editbook", { book })
-    })
-
+    const book = await Book.findByPk(id)
+    if (!book) {
+        console.log("Livro não encontrado.")
+        return
+    }
+    res.render("editbook", { book })
 })
 
-app.post("/books/edit/:id", (req, res) => {
+app.post("/books/edit/:id", async (req, res) => {
     const id = req.params.id
     const title = req.body.title
     const pageqty = req.body.pageqty
-
-    const sql = "update books set ?? = ?, ?? = ? where ?? = ?"
-    const data = ["title", title, "pageqty", pageqty, "id", id]
-
-    conn.query(sql, data, (err, data) => {
-        if (err) {
-            console.log(err)
-            return
-        }
-
-        const book = data[0]
-    })
-
+    const book = await Book.findByPk(id)
+    if (!book) {
+        console.log("Livro não encontrado.")
+        return
+    }
+    await book.update({ title, pageqty })
     res.redirect(`/books/${id}`)
 })
 
-app.post("/books/delete/:id", (req, res) => {
+app.post("/books/delete/:id", async (req, res) => {
     const id = req.params.id
-
-    const sql = "delete from books where ?? = ?;"
-    const data = ["id", id]
-
-    conn.query(sql, data, (err) => {
-        console.log(err)
-    })
-
+    const book = await Book.findByPk(id)
+    if (!book) {
+        console.log("Livro não encontrado.")
+        return
+    }
+    book.destroy()
     res.redirect("/books");
 })
 
-app.listen(3000)
+conn.sync().then(() => {
+    app.listen(3000)
+}).catch((error) => console.log(error))
