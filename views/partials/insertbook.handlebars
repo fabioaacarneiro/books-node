@@ -1,0 +1,21 @@
+<dialog class="dialog-form" close id="insert-book-dialog">
+    <h1>cadastre o seu livro:</h1>
+    <form action="/books/insertbook" method="post">
+        <div class="form-control">
+            <label class="input-label" for="title">Título:</label>
+            <input class="input-empty" input-form type="text" name="title" id="title">
+            <label class="input-label" for="pageqty">Páginas:</label>
+            <input class="input-empty" input-form type="text" name="pageqty" id="pageqty">
+            <label class="input-label" for="authorName">Autor:</label>
+            <input class="input-empty" input-form type="text" name="authorName" id="authorName">
+            <label class="input-label" for="publisher">Editora:</label>
+            <input class="input-empty" input-form type="text" name="publisher" id="publisher">
+            <label class="input-label" for="country">País:</label>
+            <input class="input-empty" input-form type="text" name="country" id="country">
+        </div>
+        <section class="btn-control">
+            <button class="btn btn-confirm" type="submit" value="Cadastrar">Cadastrar</button>
+            <button class="btn btn-cancel" id="insert-book-dialog-cancel">Cancelar</button>
+        </section>
+    </form>
+</dialog>

@@ -1,14 +1,22 @@
-<dialog class="dialog-form" close id="editbook-dialog" <h1>Edite o seu livro:</h1>
+<dialog class="dialog-form" close id="edit-book-dialog">
+    <h1>Edite o seu livro:</h1>
     <form action="/books/edit/{{book.id}}" method="post">
         <div class="form-control">
             <label class="input-label" for="title">Título:</label>
             <input class="input-empty" input-form type="text" name="title" id="title" value="{{book.title}}">
             <label class="input-label" for="pageqty">Páginas:</label>
             <input class="input-empty" input-form type="text" name="pageqty" id="pageqty" value="{{book.pageqty}}">
+            <label class="input-label">Autor:</label>
+            <input class="input-empty" input-form type="text" name="name" id="name" value="{{author.name}}">
+            <label class="input-label">Editora:</label>
+            <input class="input-empty" input-form type="text" name="publisher" id="publisher"
+                value="{{author.publisher}}">
+            <label class="input-label">País:</label>
+            <input class="input-empty" input-form type="text" name="country" id="country" value="{{author.country}}">
         </div>
         <section class="btn-control">
             <button class="btn btn-confirm" type="submit">Atualizar</button>
-            <button class="btn btn-cancel" id="editbook-dialog-cancel">Cancelar</button>
+            <button class="btn btn-cancel" id="edit-book-dialog-cancel">Cancelar</button>
         </section>
     </form>
 </dialog>

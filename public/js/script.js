@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll("[input-form]").forEach((element) => {
 
+        const app = document.querySelector("#app")
+
         const toggleInputEmptyClass = () => {
             if (element.value != "") {
                 element.classList.remove("input-empty")
@@ -14,27 +16,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     })
 
-    document.querySelector("#edit-button").addEventListener("click", (evt) => {
-        evt.preventDefault()
-        document.querySelector("#editbook-dialog").showModal();
-        document.querySelector("#app").classList.add("background-blur")
-    })
+    const modalHandler = (open, close, modal) => {
+        const openElement = document.querySelector(open)
+        const closeElement = document.querySelector(close)
+        const modalElement = document.querySelector(modal)
 
-    document.querySelector("#editbook-dialog-cancel").addEventListener("click", (evt) => {
-        evt.preventDefault()
-        document.querySelector("#editbook-dialog").close();
-        document.querySelector("#app").classList.remove("background-blur")
-    })
+        if (!openElement || !closeElement || !modalElement) {
+            console.log("um ou mais elementos não foram encontrados ou ainda não foram carregados")
+            return
+        }
 
-    document.querySelector("#delete-button").addEventListener("click", (evt) => {
-        evt.preventDefault()
-        document.querySelector("#deletebook-dialog").showModal();
-        document.querySelector("#app").classList.add("background-blur")
-    })
+        openElement.addEventListener("click", (evt) => {
+            evt.preventDefault()
+            modalElement.showModal()
+            app.classList.add("background-blur")
+        })
 
-    document.querySelector("#deletebook-dialog-cancel").addEventListener("click", (evt) => {
-        evt.preventDefault()
-        document.querySelector("#deletebook-dialog").close();
-        document.querySelector("#app").classList.remove("background-blur")
-    })
+        closeElement.addEventListener("click", (evt) => {
+            evt.preventDefault()
+            modalElement.close()
+            app.classList.remove("background-blur")
+        })
+    }
+
+    modalHandler("#insert-button", "#insert-book-dialog-cancel", "#insert-book-dialog")
+    modalHandler("#delete-button", "#delete-book-dialog-cancel", "#delete-book-dialog")
+    modalHandler("#edit-button", "#edit-book-dialog-cancel", "#edit-book-dialog")
+
 })

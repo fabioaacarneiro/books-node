@@ -1,24 +1,22 @@
 const { DataTypes } = require("sequelize")
+
 const db = require("../db/connection")
 
+const Author = require("./Author")
+
 const Book = db.define("books", {
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
     title: {
         type: DataTypes.STRING,
         require: true,
         allowNull: false,
     },
     pageqty: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         require: true,
     }
-}, {
-    timestamps: false
 })
+
+Book.belongsTo(Author)
 
 module.exports = Book
