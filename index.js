@@ -1,7 +1,7 @@
 const path = require("path")
 const express = require("express")
 const exphbs = require("express-handlebars")
-const mysql = require("mysql")
+const conn = require("./db/connection")
 
 const app = express()
 
@@ -115,19 +115,4 @@ app.post("/books/delete/:id", (req, res) => {
     res.redirect("/books");
 })
 
-const conn = mysql.createConnection({
-    host: "localhost",
-    user: "seu_usuario",
-    password: "sua_senha",
-    database: "seu_database",
-})
-
-conn.connect(function (err) {
-    if (err) {
-        console.log(err)
-    }
-
-    console.log("Conectado ao MySQL")
-
-    app.listen(3000)
-})
+app.listen(3000)
