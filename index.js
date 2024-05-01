@@ -28,23 +28,17 @@ app.get("/", (req, res) => {
 })
 
 app.get("/books", async (req, res) => {
-    const booksData = await Book.findAll()
-    if (!booksData) {
-        res.render('books', {})
-        return
-    }
-    const books = booksData.map(book => book.dataValues)
+    const books = await Book.findAll({ raw: true })
     res.render('books', { books })
 })
 
 app.get("/books/:id", async (req, res) => {
     const id = req.params.id
-    const bookData = await Book.findByPk(id)
-    if (!bookData) {
+    const book = await Book.findByPk(id, { raw: true })
+    if (!book) {
         console.log("Livro não encontrado.")
         return
     }
-    const book = bookData.dataValues
     console.log(book)
     res.render("book", { book })
 })
