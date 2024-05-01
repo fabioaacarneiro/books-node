@@ -1,4 +1,4 @@
-## Projeto Simples com Express, Handlebars, CSS, Javascript e MySQL
+## Projeto Simples com Express, Handlebars, CSS, Javascript, Sequelize e MySQL
 
 
 
