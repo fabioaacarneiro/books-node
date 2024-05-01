@@ -41,9 +41,10 @@ app.get("/books", (req, res) => {
 
 app.get("/books/:id", (req, res) => {
     const id = req.params.id
-    const sql = `select * from books where id = ${id}`
+    const sql = "select * from books where ?? = ?"
+    const data = ["id", id]
 
-    conn.query(sql, (err, data) => {
+    conn.query(sql, data, (err, data) => {
         if (err) {
             console.log(err)
         }
@@ -58,8 +59,10 @@ app.post("/books/insertbook", (req, res) => {
     const title = req.body.title
     const pageqty = req.body.pageqty
 
-    const sql = `insert into books (title, pageqty) values ('${title}', '${pageqty}');`
-    conn.query(sql, (err) => {
+    const sql = "insert into books (??, ??) values (?, ?);"
+    const data = ["title", "pageqty", title, pageqty]
+
+    conn.query(sql, data, (err) => {
         if (err) {
             console.log(err)
         }
@@ -70,9 +73,10 @@ app.post("/books/insertbook", (req, res) => {
 
 app.get("/books/edit/:id", (req, res) => {
     const id = req.params.id
-    const sql = `select * from books where id = ${id}`
+    const sql = "select * from books where ?? = ?"
+    const data = ["id", id]
 
-    conn.query(sql, (err, data) => {
+    conn.query(sql, data, (err, data) => {
         if (err) {
             console.log(err)
             return
@@ -89,9 +93,10 @@ app.post("/books/edit/:id", (req, res) => {
     const title = req.body.title
     const pageqty = req.body.pageqty
 
-    const sql = `update books set title = "${title}", pageqty = "${pageqty}" where id = ${id};`
+    const sql = "update books set ?? = ?, ?? = ? where ?? = ?"
+    const data = ["title", title, "pageqty", pageqty, "id", id]
 
-    conn.query(sql, (err, data) => {
+    conn.query(sql, data, (err, data) => {
         if (err) {
             console.log(err)
             return
@@ -106,9 +111,10 @@ app.post("/books/edit/:id", (req, res) => {
 app.post("/books/delete/:id", (req, res) => {
     const id = req.params.id
 
-    const sql = `delete from books where id = ${id};`
+    const sql = "delete from books where ?? = ?;"
+    const data = ["id", id]
 
-    conn.query(sql, (err) => {
+    conn.query(sql, data, (err) => {
         console.log(err)
     })
 
